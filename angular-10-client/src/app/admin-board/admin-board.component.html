@@ -1,0 +1,60 @@
+<div class="container mt-3">
+    <h2>Gestion des utilisateurs</h2>
+
+    <!-- Formulaire pour ajouter un nouvel utilisateur -->
+    <div class="mb-4">
+        <h4>Ajouter un utilisateur</h4>
+        <form (ngSubmit)="addUser(addUserForm.value)" #addUserForm="ngForm">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" ngModel name="username" class="form-control" placeholder="Nom d'utilisateur" required>
+                </div>
+                <div class="col">
+                    <input type="email" ngModel name="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="col">
+                    <input type="password" ngModel name="password" class="form-control" placeholder="Mot de passe" required>
+                </div>
+                <div class="col">
+                    <select multiple ngModel name="roles" class="form-control">
+                        <option *ngFor="let role of allRoles" [ngValue]="role">{{ role }}</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success" [disabled]="!addUserForm.valid">Ajouter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tableau des utilisateurs existants pour la mise à jour ou suppression -->
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>
+                    <input type="text" [(ngModel)]="user.username" name="username" class="form-control">
+                </td>
+                <td>
+                    <input type="email" [(ngModel)]="user.email" name="email" class="form-control">
+                </td>
+                <td>
+                    <select multiple [(ngModel)]="user.roles" class="form-control">
+                        <option *ngFor="let role of allRoles" [ngValue]="role">{{ role }}</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="btn btn-primary" (click)="updateUserRoles(user)">Modifier</button>
+                    <button class="btn btn-danger" (click)="deleteUser(user)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
